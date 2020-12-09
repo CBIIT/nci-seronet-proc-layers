@@ -1,5 +1,3 @@
-import urllib
-import zipfile
 import boto3
 from io import *
 import json
