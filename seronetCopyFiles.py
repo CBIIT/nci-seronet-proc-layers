@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import urllib
 import zipfile
-=======
->>>>>>> 7c51e25d3c0b3fe5089101000f4441ee156ec6b6
 import boto3
 from io import *
 import json
@@ -68,11 +65,7 @@ def fileCopy(s3_client, event, destination_bucket_name):
       else:
                 file_type="'"+"uncertain"+"'"
       file_action="'"+"submit"+"'" 
-<<<<<<< HEAD
       file_submitted_by= "'"+prefix+ "'"
-=======
-      file_submitted_by="NULL"
->>>>>>> 7c51e25d3c0b3fe5089101000f4441ee156ec6b6
       updated_by="NULL"
             
       
