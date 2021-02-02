@@ -52,32 +52,38 @@ def fileCopy(s3_client, event, destination_bucket_name):
       key =prefix+'/'+timestamp+'/'+file_key_name
       copy_source_object = {'Bucket': source_bucket_name, 'Key': file_key_name}
       #set up the parameter for future RDS record
-      file_name="'"+file_key_name+"'"
-      file_location="'"+destination_bucket_name+'/'+key+"'"
-      file_added_on="'"+timestampDB+"'"
-      file_last_processed_on="'"+timestampDB+"'"
-      file_origin="'"+source_bucket_name+"'"
+      file_name=file_key_name
+      file_location=destination_bucket_name+'/'+key
+      file_added_on=timestampDB
+      file_last_processed_on=timestampDB
+      file_origin=source_bucket_name
       fileType=file_key_name.split('.')
       if len(fileType)>1:
-                file_type="'"+fileType[len(fileType)-1]+"'"
+                file_type=fileType[len(fileType)-1]
       else:
-                file_type="'"+"uncertain"+"'"
-      file_action="'"+"submit"+"'" 
-      file_submitted_by= "'"+prefix+ "'"
-      updated_by="NULL"
+                file_type="uncertain"
+      file_action="submit"
+      file_submitted_by=prefix
+      updated_by=None
             
       
       s3_client.copy_object(CopySource=copy_source_object, Bucket=destination_bucket_name, Key=key)
       dest_etag = s3_client.head_object(Bucket=destination_bucket_name,Key=key)['ETag'][1:-1]
       print('Destination Etag: '+dest_etag)
       if(dest_etag==source_etag):
-                file_status= "'"+'COPY_SUCCESSFUL'+"'"
+                file_status= 'COPY_SUCCESSFUL'
                 s3_client.delete_object(Bucket=source_bucket_name, Key=file_key_name)
       else:
-                file_status= "'"+'COPY_UNSUCCESSFUL'+"'"
+                file_status= 'COPY_UNSUCCESSFUL'
                 
       result={'file_name': file_name, 'file_location': file_location, 'file_added_on': file_added_on, 'file_last_processed_on': file_last_processed_on, 'file_status': file_status, 'file_origin': file_origin, 'file_type': file_type, 'file_action': file_action, 'file_submitted_by': file_submitted_by, 'updated_by': updated_by}
       return result
       
   except Exception as err:
       raise err
+
+
+
+
+
+
