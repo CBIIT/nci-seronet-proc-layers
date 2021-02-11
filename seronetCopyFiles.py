@@ -22,10 +22,6 @@ def get_stream_md5(stream):
   return hash_obj.hexdigest()
 
 
-
-
-
-
 def fileCopy(s3_client, event, destination_bucket_name):
   try:
       s3_client = boto3.client("s3")
@@ -60,11 +56,11 @@ def fileCopy(s3_client, event, destination_bucket_name):
       elif  CBC03 in source_bucket_name:
         prefix = CBC03
       elif  CBC04 in source_bucket_name:
-        prefix = CBC04        
+        prefix = CBC04
       else:
         prefix='UNMATCHED'    
         
-      # Setting the Timezone to US Eastern to prefix the object    
+      # Setting the Timezone to US Eastern to prefix the object
       eastern = dateutil.tz.gettz('US/Eastern')
       timestamp = datetime.datetime.now(tz=eastern).strftime("%H-%M-%S-%m-%d-%Y")
       timestampDB = datetime.datetime.now(tz=eastern).strftime('%Y-%m-%d %H:%M:%S')
