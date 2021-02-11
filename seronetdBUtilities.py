@@ -1,12 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Nov 16 12:48:25 2020
-
-@author: w1997
-"""
-
 import mysql.connector
-from mysql.connector import errorcode
 
 def connectToDB(user, password, host, database):
     try:
