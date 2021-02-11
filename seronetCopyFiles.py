@@ -5,20 +5,13 @@ import datetime
 import dateutil.tz
 
 
-
 def get_stream_md5(stream):
-  '''
-    Get MD5 of a stream content as a hex encoded string
-    :param stream:
-    :return: hex encoded MD5
-  '''
   BLOCK_SIZE=1024
   hash_obj = hashlib.md5()
   buf = stream.read(amt=BLOCK_SIZE)
   while len(buf) > 0:
       hash_obj.update(buf)
       buf = stream.read(amt=BLOCK_SIZE)
-  
   return hash_obj.hexdigest()
 
 
@@ -58,8 +51,7 @@ def fileCopy(s3_client, event, destination_bucket_name):
       elif  CBC04 in source_bucket_name:
         prefix = CBC04
       else:
-        prefix='UNMATCHED'    
-        
+        prefix='UNMATCHED'
       # Setting the Timezone to US Eastern to prefix the object
       eastern = dateutil.tz.gettz('US/Eastern')
       timestamp = datetime.datetime.now(tz=eastern).strftime("%H-%M-%S-%m-%d-%Y")
