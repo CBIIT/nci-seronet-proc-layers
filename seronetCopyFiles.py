@@ -1,29 +1,25 @@
 import boto3
-from io import *
 import hashlib
 import json
-import os
 import datetime
 import dateutil.tz
 
 
 
-
 def get_stream_md5(stream):
-    '''
+  '''
     Get MD5 of a stream content as a hex encoded string
     :param stream:
     :return: hex encoded MD5
-    '''
-    
-    BLOCK_SIZE=1024
-    hash_obj = hashlib.md5()
-    buf = stream.read(amt=BLOCK_SIZE)
-    while len(buf) > 0:
-        hash_obj.update(buf)
-        buf = stream.read(amt=BLOCK_SIZE)
-        
-    return hash_obj.hexdigest()
+  '''
+  BLOCK_SIZE=1024
+  hash_obj = hashlib.md5()
+  buf = stream.read(amt=BLOCK_SIZE)
+  while len(buf) > 0:
+      hash_obj.update(buf)
+      buf = stream.read(amt=BLOCK_SIZE)
+  
+  return hash_obj.hexdigest()
 
 
 
@@ -92,7 +88,7 @@ def fileCopy(s3_client, event, destination_bucket_name):
       updated_by = None
             
       
-      r = s3_client.copy_object(CopySource=copy_source_object, Bucket=destination_bucket_name, Key=key)
+      s3_client.copy_object(CopySource=copy_source_object, Bucket=destination_bucket_name, Key=key)
       #get destination file md5
       obj_dest = s3_client.get_object(Bucket=destination_bucket_name, Key=key)
       stream_body_dest = obj_dest['Body']
