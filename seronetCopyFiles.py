@@ -24,7 +24,6 @@ def fileCopy(s3_client, event, destination_bucket_name):
       CBC03='cbc03'
       CBC04='cbc04'
       
-      
       # Bucket Name where file was uploaded
       message = event['Records'][0]['Sns']['Message']
       #convert the message to json style
@@ -32,8 +31,7 @@ def fileCopy(s3_client, event, destination_bucket_name):
       source_bucket_name =messageJson['bucketName']
     
       # determining which cbc bucket the file came from
-      prefix = '' 
-    
+      prefix = ''
       # Filename of object (with path) and Etag
       file_key_name = messageJson['key']
       
