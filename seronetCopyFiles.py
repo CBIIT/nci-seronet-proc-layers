@@ -98,7 +98,7 @@ def fileCopy(s3_client, event, destination_bucket_name, maxtry):
             print('Destination md5: '+file_md5_dest)
             if(file_md5_dest == file_md5_source):
                     result['file_status'] = 'COPY_SUCCESSFUL'
-                    #s3_client.delete_object(Bucket=source_bucket_name, Key=file_key_name)
+                    s3_client.delete_object(Bucket=source_bucket_name, Key=file_key_name)
             else:
                     result['file_status'] = 'COPY_UNSUCCESSFUL'
                     print("The destination file md5 value is different from the source file md5 value")
