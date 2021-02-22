@@ -1,3 +1,7 @@
+pandas==1.2.2
+numpy==1.16.5
+pandas-aws==0.1.4
+icd10-cm==0.0.4
 mysql-connector-python==8.0.22
 pymysql==0.10.1
 jinja2==2.11.3
