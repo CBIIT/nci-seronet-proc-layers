@@ -16,14 +16,9 @@ def get_stream_md5(stream):
     return hash_obj.hexdigest()
 
 
-def fileCopy(s3_client, event, destination_bucket_name, maxtry):
+def fileCopy(s3_client, event, destination_bucket_name, maxtry, bucket_name_list):
     for i in range(0,maxtry):
         s3_client = boto3.client("s3")
-        # defining constants for CBCs
-        CBC01='cbc01'
-        CBC02='cbc02'
-        CBC03='cbc03'
-        CBC04='cbc04'
         
         # Bucket Name where file was uploaded
         message = event['Records'][0]['Sns']['Message']
@@ -40,17 +35,10 @@ def fileCopy(s3_client, event, destination_bucket_name, maxtry):
         stream_body = obj['Body']
         file_md5_source = get_stream_md5(stream_body)
         print('Source md5: '+file_md5_source)
-        
-        if CBC01 in source_bucket_name:
-            prefix = CBC01
-        elif  CBC02 in source_bucket_name:
-            prefix = CBC02
-        elif  CBC03 in source_bucket_name:
-            prefix = CBC03
-        elif  CBC04 in source_bucket_name:
-            prefix = CBC04
-        else:
-            prefix='UNMATCHED'
+        prefix='UNMATCHED'
+        for CBC in bucket_name_list:
+            if CBC in source_bucket_name:
+                prefix = CBC
         # Setting the Timezone to US Eastern to prefix the object
         eastern = dateutil.tz.gettz('US/Eastern')
         timestamp = datetime.datetime.now(tz=eastern).strftime("%H-%M-%S-%m-%d-%Y")
@@ -122,21 +110,3 @@ def fileCopy(s3_client, event, destination_bucket_name, maxtry):
             return result
         #sleep 60s before try it again
         time.sleep(60) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
