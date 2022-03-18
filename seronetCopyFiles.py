@@ -15,7 +15,6 @@ def get_stream_md5(stream):
       buf = stream.read(amt=BLOCK_SIZE)
     return hash_obj.hexdigest()
 
-
 def fileCopy(s3_client, event, destination_bucket_name, maxtry, bucket_name_list):
     for i in range(0,maxtry):
         s3_client = boto3.client("s3")
@@ -41,7 +40,7 @@ def fileCopy(s3_client, event, destination_bucket_name, maxtry, bucket_name_list
                 prefix = CBC
         # Setting the Timezone to US Eastern to prefix the object
         eastern = dateutil.tz.gettz('US/Eastern')
-        timestamp = datetime.datetime.now(tz=eastern).strftime("%H-%M-%S-%m-%d-%Y")
+        timestamp = datetime.datetime.now(tz=eastern).strftime("%Y-%m-%d-%H-%M-%S")
         timestampDB = datetime.datetime.now(tz=eastern).strftime('%Y-%m-%d %H:%M:%S')
         
         # S3 copy object operation with the desired prefix
@@ -109,4 +108,4 @@ def fileCopy(s3_client, event, destination_bucket_name, maxtry, bucket_name_list
             s3_client.delete_object(Bucket=source_bucket_name, Key=file_key_name)
             return result
         #sleep 60s before try it again
-        time.sleep(60) 
+        time.sleep(60)  
