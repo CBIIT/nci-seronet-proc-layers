@@ -108,4 +108,4 @@ def fileCopy(s3_client, event, destination_bucket_name, maxtry, bucket_name_list
             s3_client.delete_object(Bucket=source_bucket_name, Key=file_key_name)
             return result
         #sleep 60s before try it again
-        time.sleep(60)  
+        time.sleep(60)
