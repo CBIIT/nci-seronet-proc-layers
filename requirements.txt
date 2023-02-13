@@ -1,7 +1,10 @@
 pandas==1.1.5
 numpy==1.19.5
-icd10-cm==0.0.4
+icd10-cm==0.0.5
 mysql-connector-python==8.0.22
 pymysql==0.10.1
 jinja2==2.11.3
 XlsxWriter==3.0.2
+SQLAlchemy == 1.4.44
+python-dateutil == 2.8.2
+pyyaml == 5.3
